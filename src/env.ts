@@ -3,10 +3,11 @@ import chalk from "chalk";
 
 config();
 
-const envVariables = ["SERVER_PORT", "SERVER_DATABASE"];
+const envVariables = ["SERVER_PORT", "SERVER_DATABASE", "SERVER_JWT_SECRET"];
 
 let SERVER_PORT: number;
 let SERVER_DATABASE: string;
+let SERVER_JWT_SECRET: string;
 
 async function loadEnv() {
   envVariables.map((env) => {
@@ -19,6 +20,11 @@ async function loadEnv() {
 
         case "SERVER_DATABASE":
           SERVER_DATABASE = process.env[env] as string;
+          logLoad(env);
+          break;
+
+        case "SERVER_JWT_SECRET":
+          SERVER_JWT_SECRET = process.env[env] as string;
           logLoad(env);
           break;
       }
@@ -38,4 +44,4 @@ function logLoad(load: string) {
 
 loadEnv();
 
-export { SERVER_PORT, SERVER_DATABASE };
+export { SERVER_PORT, SERVER_DATABASE, SERVER_JWT_SECRET };
