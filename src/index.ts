@@ -5,12 +5,14 @@ import chalk from "chalk";
 import userRouter from "./routes/users";
 
 import { SERVER_PORT } from "./env";
+import { auth } from "./middleware/auth";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(auth as any);
 
 app.use("/users", userRouter);
 

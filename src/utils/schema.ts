@@ -5,3 +5,8 @@ export const userSignupSchema = z.object({
   password: z.string(),
   name: z.string(),
 });
+
+export const accessTokenSchema = z.object({
+  user: z.string(),
+  role: z.string(),
+});

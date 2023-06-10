@@ -11,7 +11,7 @@ userRouter.post("/", (req, res) => {
   } catch (e) {
     if (e instanceof ZodError) {
       res.status(400).json({
-        data: "Required fields are missing",
+        msg: "Required fields are missing",
       });
     }
   }

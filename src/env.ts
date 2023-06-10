@@ -26,6 +26,7 @@ async function loadEnv() {
         case "SERVER_JWT_SECRET":
           SERVER_JWT_SECRET = process.env[env] as string;
           logLoad(env);
+          console.log(SERVER_JWT_SECRET)
           break;
       }
     } else {
