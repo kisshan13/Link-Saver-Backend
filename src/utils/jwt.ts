@@ -4,6 +4,7 @@ import jwt, {
   TokenExpiredError,
 } from "jsonwebtoken";
 import { SERVER_JWT_SECRET } from "../env";
+import chalk from "chalk";
 
 export interface DecodedReturnI {
   success: boolean;
@@ -29,7 +30,6 @@ export function encodeToken(tokenObj: Object) {
 
 export function decodeToken(jwtToken: string): DecodedReturnI | undefined {
   try {
-    console.log(SERVER_JWT_SECRET);
     let decoded = jwt.verify(jwtToken, SERVER_JWT_SECRET);
 
     return {
@@ -37,21 +37,27 @@ export function decodeToken(jwtToken: string): DecodedReturnI | undefined {
       msg: decoded,
     };
   } catch (e) {
-    if (e instanceof TokenExpiredError) {
-      return {
-        success: false,
-        msg: "Token expired",
-      };
-    } else if (e instanceof JsonWebTokenError) {
-      switch (e.message) {
-        case "invalid token" || "invalid signature":
-          return {
-            success: false,
-            msg: "Token is not valid.",
-          };
+    if (e instanceof Error) {
+      if (e instanceof TokenExpiredError) {
+        return {
+          success: false,
+          msg: "Token expired",
+        };
+      } else if (e instanceof JsonWebTokenError) {
+        switch (e.message) {
+          case "invalid token" || "invalid signature":
+            return {
+              success: false,
+              msg: "Token is not valid.",
+            };
+        }
+      } else {
+        console.log(
+          `${chalk.bold(chalk.redBright(["ERROR"]))} jwt.ts ${
+            e?.message as any
+          }`
+        );
       }
-    } else {
-      console.log(e);
     }
   }
 }

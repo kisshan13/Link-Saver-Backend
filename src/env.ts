@@ -10,6 +10,7 @@ let SERVER_DATABASE: string;
 let SERVER_JWT_SECRET: string;
 
 async function loadEnv() {
+  console.log("\n");
   envVariables.map((env) => {
     if (typeof process.env[env] === "string") {
       switch (env) {
@@ -26,7 +27,6 @@ async function loadEnv() {
         case "SERVER_JWT_SECRET":
           SERVER_JWT_SECRET = process.env[env] as string;
           logLoad(env);
-          console.log(SERVER_JWT_SECRET)
           break;
       }
     } else {
@@ -39,7 +39,9 @@ async function loadEnv() {
 
 function logLoad(load: string) {
   console.log(
-    `[env.ts] ⚡ LOADED ENV ${chalk.bgGreenBright.bold.whiteBright(load)}`
+    chalk.bold(
+      `[env.ts] ⚡ LOADED ENV ${chalk.bgGreenBright.bold.whiteBright(load)}`
+    )
   );
 }
 
